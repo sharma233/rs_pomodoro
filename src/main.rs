@@ -1,7 +1,6 @@
 use std::time::{Duration, SystemTime};
 use std::thread::sleep;
 use std::io::{Write, stdout};
-use notifica;
 
 fn main() {
     let now = SystemTime::now();
@@ -10,6 +9,7 @@ fn main() {
     let mut stdout = stdout();
     let mut secs_elapsed = now.elapsed().unwrap().as_secs();
 
+    //print mm:ss timer
     while secs_elapsed < target_secs {
         secs_elapsed = now.elapsed().unwrap().as_secs();
         let formatted_time = get_formatted_time_string_from_seconds(secs_elapsed);
@@ -18,7 +18,8 @@ fn main() {
         sleep(Duration::new(1, 0));
     }
 
-    notifica::notify("Focus timer done!", "Go back to app to start break timer").unwrap();
+    //ring terminal bell
+    println!("\x07");
 }
 
 fn get_formatted_time_string_from_seconds(secs: u64) -> String {
